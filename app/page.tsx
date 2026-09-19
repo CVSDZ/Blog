@@ -1,7 +1,9 @@
-import { posts } from "@/lib/posts";
+import { getPublishedPosts } from "@/lib/posts";
 import { PostCard } from "@/components/post/post-card";
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getPublishedPosts();
+
   return (
     <div>
       <section className="border-b bg-gradient-to-b from-muted/60 to-background">
@@ -15,11 +17,17 @@ export default function Home() {
 
       <section className="mx-auto max-w-4xl px-4 py-10">
         <h2 className="mb-4 text-xl font-semibold">最新文章</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
+        {posts.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            还没有文章。去 Supabase 插入一篇 published=true 的文章试试。
+          </p>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
