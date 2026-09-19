@@ -39,3 +39,38 @@ export async function getPublishedPosts(): Promise<Post[]> {
     tags: row.tags ?? [],
   }));
 }
+export type PostDetail = Post & {
+  content: string;
+};
+
+type PostDetailRow = PostRow & {
+  content: string;
+};
+
+export async function getPostBySlug(slug: string): Promise<PostDetail | null> {
+  const supabase = createServerSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("posts")
+    .select("slug, title, summary, content, tags, created_at")
+    .eq("slug", slug)
+    .eq("published", true)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`查询文章失败：${error.message}`);
+  }
+
+  if (!data) return null;
+
+  const row = data as PostDetailRow;
+
+  return {
+    slug: row.slug,
+    title: row.title,
+    summary: row.summary,
+    content: row.content,
+    date: row.created_at.slice(0, 10),
+    tags: row.tags ?? [],
+  };
+}
