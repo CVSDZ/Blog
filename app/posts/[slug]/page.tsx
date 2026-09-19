@@ -45,11 +45,21 @@ export default async function PostPage({
 
       <header className="mt-6 border-b pb-6">
         <h1 className="text-3xl font-bold tracking-tight">{post.title}</h1>
-        <div className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
+        <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
           <time>{post.date}</time>
-          <div className="flex gap-1.5">
+          {post.category ? (
+            <Link
+              href={`/?category=${encodeURIComponent(post.category)}`}
+              className="rounded-full border px-2.5 py-0.5 transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {post.category}
+            </Link>
+          ) : null}
+          <div className="flex flex-wrap gap-1.5">
             {post.tags.map((tag) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Link key={tag} href={`/?tag=${encodeURIComponent(tag)}`}>
+                <Badge>{tag}</Badge>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,8 +1,29 @@
-import { getPublishedPosts } from "@/lib/posts";
+import { getPostFilters, getPublishedPosts } from "@/lib/posts";
 import { PostCard } from "@/components/post/post-card";
+import { PostFilters } from "@/components/post/post-filters";
 
-export default async function Home() {
-  const posts = await getPublishedPosts();
+type SearchParams = {
+  category?: string;
+  tag?: string;
+};
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const { category, tag } = await searchParams;
+
+  const [posts, filters] = await Promise.all([
+    getPublishedPosts({ category, tag }),
+    getPostFilters(),
+  ]);
+
+  const activeLabel = category
+    ? `分类：${category}`
+    : tag
+      ? `标签：${tag}`
+      : null;
 
   return (
     <div>
@@ -16,10 +37,22 @@ export default async function Home() {
       </section>
 
       <section className="mx-auto max-w-4xl px-4 py-10">
-        <h2 className="mb-4 text-xl font-semibold">最新文章</h2>
+        <PostFilters
+          categories={filters.categories}
+          tags={filters.tags}
+          activeCategory={category}
+          activeTag={tag}
+        />
+
+        <h2 className="mt-8 mb-4 text-xl font-semibold">
+          {activeLabel ?? "最新文章"}
+        </h2>
+
         {posts.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            还没有文章。去 Supabase 插入一篇 published=true 的文章试试。
+            {activeLabel
+              ? "该筛选下暂无文章。"
+              : "还没有文章。去 Supabase 插入一篇 published=true 的文章试试。"}
           </p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
