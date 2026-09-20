@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { getPostBySlug } from "@/lib/posts";
 import { Badge } from "@/components/ui/badge";
+import { GiscusComments } from "@/components/comments/giscus-comments";
 
 type Params = { slug: string };
 
@@ -70,6 +71,8 @@ export default async function PostPage({
           {post.content}
         </ReactMarkdown>
       </div>
+
+      <GiscusComments />
     </article>
   );
 }
