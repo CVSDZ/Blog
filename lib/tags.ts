@@ -11,3 +11,20 @@ export function parseTags(input: string): string[] {
 
   return result;
 }
+export function normalizeTags(raw: string[] | string): string[] {
+  if (typeof raw === "string") {
+    return parseTags(raw);
+  }
+
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  for (const item of raw) {
+    const tag = item.trim();
+    if (!tag || seen.has(tag)) continue;
+    seen.add(tag);
+    result.push(tag);
+  }
+
+  return result;
+}

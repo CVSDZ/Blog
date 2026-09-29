@@ -20,10 +20,10 @@ export function PostFilters({
 
   const linkClass = (active: boolean) =>
     cn(
-      "rounded-full border px-3 py-1 text-sm transition-colors",
+      "rounded-full border px-3 py-1 text-sm transition-all duration-200",
       active
-        ? "border-transparent bg-primary text-primary-foreground"
-        : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+        ? "border-primary/50 bg-primary/10 text-primary shadow-[0_0_12px_rgba(99,102,241,0.3)]"
+        : "border-border text-muted-foreground hover:border-foreground/20 hover:text-foreground"
     );
 
   return (

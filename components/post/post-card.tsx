@@ -12,7 +12,7 @@ import type { Post } from "@/lib/posts";
 export function PostCard({ post }: { post: Post }) {
   return (
     <Link href={`/posts/${post.slug}`} className="block">
-      <Card className="h-full transition-shadow hover:shadow-md">
+      <Card className="linear-card h-full transition-all duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
         <CardHeader>
           <CardTitle>{post.title}</CardTitle>
           <CardDescription className="line-clamp-2 min-h-10">

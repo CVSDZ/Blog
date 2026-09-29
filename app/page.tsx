@@ -27,9 +27,13 @@ export default async function Home({
 
   return (
     <div>
-      <section className="border-b bg-gradient-to-b from-muted/60 to-background">
-        <div className="mx-auto max-w-4xl px-4 py-16">
-          <h1 className="text-4xl font-bold tracking-tight">大模型学习笔记</h1>
+      <section className="relative overflow-hidden border-b">
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          <div className="ambient-glow absolute -top-40 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
+          <div className="ambient-glow absolute -top-20 right-[10%] h-72 w-96 rounded-full bg-purple-500/15 blur-[100px]" />
+        </div>
+        <div className="relative mx-auto max-w-4xl px-4 py-20">
+          <h1 className="text-4xl font-bold tracking-[-0.02em]">大模型学习笔记</h1>
           <p className="mt-3 text-lg text-muted-foreground">
             分享大模型开发的学习心得与记录。
           </p>
